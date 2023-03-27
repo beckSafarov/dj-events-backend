@@ -20,5 +20,12 @@ module.exports = createCoreController('api::event.event', ({ strapi }) => ({
     if (!data) return context.notFound()
 
     return await this.sanitizeOutput(data, context)
-  }
+  },
+  async create(ctx) {
+    let entity;
+    ctx.request.body.data.user = ctx.state.user;
+    entity = await strapi.service("api::event.event").create(ctx.request.body);
+    console.log(entity)
+    return entity;
+  },
 }));
